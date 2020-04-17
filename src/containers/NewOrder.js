@@ -2,22 +2,34 @@ import React, { Component } from 'react'
 import MainForm from '../components/MainForm'
 import Cart from '../components/Cart'
 import Button from 'react-bootstrap/Button'
+
+const DEFAULT_STATE = {
+  sizes: '',
+  sauces: '',
+  cheeses: '',
+  toppings: [],
+  gourmet_toppings: []
+}
+
 export default class NewOrder extends Component {
 
   state = {
     id_count: 0,
-    pizzas: []
+    pizzas: [],
+    main_form_state: DEFAULT_STATE
   }
 
   addToOrder = (hash, id) => {
-    const array = this.state.pizzas
-    const pizza = hash
-    pizza.id = id
-    array.push(pizza)
-    this.setState({
-      id_count: id + 1,
-      pizzas: array
-    });
+    
+      const array = this.state.pizzas;
+      const pizza = hash;
+      pizza.id = id;
+      array.push(pizza);
+      this.setState({
+        id_count: id + 1,
+        pizzas: array
+      });
+    
   }
 
   removePizza = (id) => {
@@ -25,6 +37,12 @@ export default class NewOrder extends Component {
     this.setState({
       pizzas
     });
+  }
+
+  editpizza = (pizza) => {
+    this.setState({
+      main_form_state: pizza
+    })
   }
 
   placeOrder = () => {
@@ -56,23 +74,26 @@ export default class NewOrder extends Component {
       )
   }
 
+  canBeSubmitted = () => {
+    return (
+      this.state.pizzas.length > 0
+    );
+  }
+
   render() {
+
+    const isEnabled = this.canBeSubmitted();
+
     return (
       <div>
-        <MainForm addToOrder={this.addToOrder} id={this.state.id_count}  />
-        <Cart pizzas={this.state.pizzas} removePizza={this.removePizza} />
-        <Button variant="dark" onClick={this.placeOrder}>Place Order</Button>
+
+        <MainForm addToOrder={this.addToOrder} id={this.state.id_count} state={this.state.main_form_state}/>
+
+        <Cart pizzas={this.state.pizzas} removePizza={this.removePizza} onEditPizza={this.editpizza}/>
+
+        <Button disabled={!isEnabled} variant="dark" onClick={this.placeOrder}>Place Order</Button>
 
       </div>
     )
   }
 }
-
-
-
-
-
-
-
-
-

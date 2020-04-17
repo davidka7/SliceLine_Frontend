@@ -3,8 +3,15 @@ import Pizza from './Pizza'
 import '../index.css';
 const Order = (props) => {
 
-  const pizzas = props.pizzas.map((pizza, index) => <Pizza pizza={pizza} removePizza={props.removePizza} key={index} />)
+  const pizzas = props.order.pizzas.map((pizza, index) => <Pizza pizza={pizza} key={index} />)
 
+  const handleDeleteButton = () => {
+    props.onDeleteOrder(props.order.id)
+  }
+
+  const handleEditButton = () => {
+    props.onEditOrder(props.order)
+  }
 
   return (
     <div className="order">
@@ -12,6 +19,9 @@ const Order = (props) => {
       <div className="pizzas">
         {pizzas}
       </div>
+      <button onClick={handleEditButton}> Edit </button>
+      <button onClick={handleDeleteButton}> Delete </button>
+      
     </div>
   )
 }

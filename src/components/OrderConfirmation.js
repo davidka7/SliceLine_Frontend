@@ -2,10 +2,10 @@ import React from 'react'
 import Pizza from './Pizza'
 
 const Order = (props) => {
-    let pizzas
-if (props.result) {
+  let pizzas;
+  if (props.result.pizzas) {
     pizzas = props.result.pizzas.map((pizza, index) => <Pizza pizza={pizza} key={index} />)
-} 
+  }
 
   return (
     <div className="order">

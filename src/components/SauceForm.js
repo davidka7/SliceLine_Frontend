@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../index.css';
-const sauceArray = ['tomato', 'white', 'bbq', 'garlic olive oil', 'french white', 'lemon hill', 'satay']
+import '../App.css';
+
+let sauceArray = ['tomato', 'white', 'bbq', 'garlic olive oil', 'french white', 'lemon hill', 'satay']
+sauceArray = sauceArray.sort()
 
 const SauceForm = (props) => {
   return (
@@ -12,13 +15,11 @@ const SauceForm = (props) => {
       <h1><label className="text-light" htmlFor="sauce">Sauce</label></h1>
       {props.picture()}
       <br></br> <br></br> <br></br> <br></br>
-      {/* <p>  */}
       <div className="row" >
         {sauceArray.map((sauce, index) => {
-          return props.fillForm(sauce, 'sauce', index)
+          return props.fillForm(sauce, 'sauces', index)
         })}
       </div>
-      {/* </p> */}
       <br></br> <br></br> <br></br> <br></br>
 
     </Fragment>

@@ -1,29 +1,29 @@
 .App {
   text-align: center;
 }
-
 .row {margin-left: 110px;
 margin-right: 110px;}
+#pot1 {
+  display: block;
+margin-left: auto;
+margin-right: auto;
+  width:248px;
+  height:248px;
+  position:relative;
+  background-image: url("./images/sizes/choose.png");
+   background-position: center;
+   background-size: cover;  }
 #pot {
- 
+  display: block;
+margin-left: auto;
+margin-right: auto;
    width:248px;
    height:248px;
    position:relative;
-   background-image: url("./images/size/small.png");
+   background-image: url("./images/sizes/small.png");
     background-position: center;
     background-size: cover;  }
-    #pot1 {
-      display: block;
-  margin-left: auto;
-  margin-right: auto;
-      width:248px;
-      height:248px;
-      position:relative;
-      background-image: url("./images/size/choose.png");
-       background-position: center;
-       background-size: cover;  }
   #ingredients { width:240px; 
-   
     left: 0;
     top: 0;
     right: 0;
@@ -32,19 +32,16 @@ margin-right: 110px;}
    height:240px;
    width: 240px;
    position:absolute}
-  
 .backy {background-image: url("./images/puz.jpg");}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -55,11 +52,9 @@ margin-right: 110px;}
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

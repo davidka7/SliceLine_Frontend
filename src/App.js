@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from './containers/NavBar';
 import NewOrder from './containers/NewOrder';
+import EditOrder from './containers/EditOrder';
 import Orders from './containers/Orders';
 import OrderConfirmation from './components/OrderConfirmation';
 import Login from './containers/Login';
@@ -11,20 +12,20 @@ import {
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import background from './images/pixur.png'
-//import { Redirect } from 'react-router-dom'
 
 export default class App extends Component {
 
   state = {
     user: null,
-    orders: [],
-    result: null
+    result: null,
+    order: null
   }
+
   sectionStyle = {
     backgroundImage: `url(${background})`,
     minHeight: '60px',
-
   }
+
   sectionStyl = {
     backgroundImage: `url(${background})`,
     minHeight: '1500px',
@@ -32,12 +33,42 @@ export default class App extends Component {
   }
 
   confirmOrder = (result) => {
-    this.setState({ result: result })
-    window.history.pushState({}, `/${this.state.user.id}/orderconfirmation`, `/${this.state.user.id}/orderconfirmation`)
+    const orders = this.state.user.orders;
+    orders.push(result);
+    this.setState(prevState => {
+      return {
+        user: {
+          ...prevState.user,
+          orders: orders
+        },
+        result: result
+      }
+    })
+    window.history.pushState({}, `/${this.state.user.name}/orderconfirmation`, `/${this.state.user.name}/orderconfirmation`)
+  }
+
+  confirmEdit = (result) => {
+    const orders = this.state.user.orders.filter(order => order.id !== result.id)
+    orders.push(result);
+    this.setState(prevState => {
+      return {
+        user: {
+          ...prevState.user,
+          orders: orders
+        },
+        order: null,
+        result: result
+      }
+    })
+    window.history.pushState({}, `/${this.state.user.name}/orderconfirmation`, `/${this.state.user.name}/orderconfirmation`)
   }
 
   clearResult = () => {
     this.setState({ result: null })
+  }
+
+  clearOrder = () => {
+    this.setState({ order: null })
   }
 
   login = (user) => {
@@ -50,39 +81,91 @@ export default class App extends Component {
         this.setState({
           user: data
         })
+        window.history.pushState({}, `/${this.state.user.name}`, `/${this.state.user.name}`)
+
       });
   }
 
-  render() {
+  deleteOrder = (orderId) => {
+    fetch(`http://localhost:3000/api/v1/orders/${orderId}`, {
+      method: 'DELETE'
+    }).then(res => res.json())
+      .then(data => {
+        data.message === "order successfully deleted" ? (
+          this.removeOrder(orderId)
+        ) : (
+            console.log('There was a problem deleting the order')
+          )
+      })
+  }
 
+  removeOrder = (orderId) => {
+    const orders = this.state.user.orders.filter(order => order.id !== orderId)
+    this.setState(prevState => {
+      return {
+        user: {
+          ...prevState.user,
+          orders: orders
+        }
+      }
+    })
+  }
+
+  editOrder = (order) => {
+    this.setState({
+      order: order
+    })
+    window.history.pushState({}, `/${this.state.user.name}/${order.id}/editorder`, `/${this.state.user.name}/${order.id}/editorder`)
+  }
+
+  render() {
 
     return (
       <div style={this.sectionStyl}>
         {!this.state.user ? (
           <Login onLogin={this.login} />
         ) : (!this.state.result ? (
-          <Router>
-            <div>
-              <div style={this.sectionStyle}>
-                <NavBar clearResult={this.clearResult} user_name={this.state.user.name}/>
+          !this.state.order ? (
+            <Router>
+              <div>
+                <div style={this.sectionStyle}>
+                  <NavBar onClick={this.clearResult} user_name={this.state.user.name} />
+                </div>
+
+                <Route exact path={`/${this.state.user.name}/neworder`} render={(props) =>
+                  <NewOrder user_id={this.state.user.id} confirmOrder={this.confirmOrder} />
+                } />
+
+                <Route exact path={`/${this.state.user.name}/orders`} render={(props) =>
+                  <Orders user_name={this.state.user.name} orders={this.state.user.orders} onDeleteOrder={this.deleteOrder} onEditOrder={this.editOrder} />
+                } />
+
               </div>
+            </Router>
+          ) : (
+              <Router>
+                <div style={this.sectionStyle}>
 
-              <Route exact path={`/${this.state.user.name}/neworder`} render={(props) =>
-                <NewOrder user_id={this.state.user.id} confirmOrder={this.confirmOrder} />
-              } />
+                  <NavBar onClick={this.clearOrder} user_name={this.state.user.name} />
 
-              <Route exact path={`/${this.state.user.name}/orders`} render={(props) =>
-                <Orders user_name={this.state.user.name} orders={this.state.orders}/>
-              } />
+                  <EditOrder user_id={this.state.user.id} order={this.state.order} confirmEdit={this.confirmEdit} />
 
-            </div>
-            {/* welcome user  */}
-          </Router>) : (
-            <Router><div style={this.sectionStyle}>
-              <NavBar clearResult={this.clearResult} user={this.state.user.id}/>
-              <OrderConfirmation user_id={this.state.user.id} result={this.state.result} />
-            </div></Router>
-          ))}
+                </div>
+              </Router>
+            )
+        ) : (
+            <Router>
+              <div style={this.sectionStyle}>
+
+                <NavBar onClick={this.clearResult} user_name={this.state.user.name} />
+
+                <OrderConfirmation user_name={this.state.user.name} result={this.state.result} />
+
+              </div>
+            </Router>
+          ))
+
+        }
         <div className="backy"> </div>
       </div>
     )
