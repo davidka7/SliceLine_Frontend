@@ -1,6 +1,6 @@
 import React from 'react'
 import Pizza from './Pizza'
-
+import '../index.css';
 const Order = (props) => {
 
   const pizzas = props.pizzas.map((pizza, index) => <Pizza pizza={pizza} removePizza={props.removePizza} key={index} />)

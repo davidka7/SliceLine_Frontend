@@ -1,6 +1,38 @@
 .App {
   text-align: center;
 }
+
+.row {margin-left: 110px;
+margin-right: 110px;}
+#pot {
+ 
+   width:248px;
+   height:248px;
+   position:relative;
+   background-image: url("./images/size/small.png");
+    background-position: center;
+    background-size: cover;  }
+    #pot1 {
+      display: block;
+  margin-left: auto;
+  margin-right: auto;
+      width:248px;
+      height:248px;
+      position:relative;
+      background-image: url("./images/size/choose.png");
+       background-position: center;
+       background-size: cover;  }
+  #ingredients { width:240px; 
+   
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin:auto;
+   height:240px;
+   width: 240px;
+   position:absolute}
+  
 .backy {background-image: url("./images/puz.jpg");}
 .App-logo {
   height: 40vmin;

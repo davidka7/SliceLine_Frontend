@@ -8,6 +8,7 @@ const GourmetToppingForm = (props) => {
 
     <Fragment>
       <h1><label className="text-light" htmlFor="gourmetTopping">Gourmet Toppings</label></h1>
+      {props.picture()}
       <br></br> <br></br> <br></br> <br></br>
       {/* <p> */}
       <div className="row">

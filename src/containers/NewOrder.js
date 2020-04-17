@@ -59,7 +59,7 @@ export default class NewOrder extends Component {
   render() {
     return (
       <div>
-        <MainForm addToOrder={this.addToOrder} id={this.state.id_count} />
+        <MainForm addToOrder={this.addToOrder} id={this.state.id_count}  />
         <Cart pizzas={this.state.pizzas} removePizza={this.removePizza} />
         <Button variant="dark" onClick={this.placeOrder}>Place Order</Button>
 
