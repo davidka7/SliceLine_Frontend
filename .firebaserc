@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "sliceline-85cf4"
+    "default": "sliceline-85cf4",
+    "staging": "sliceliner"
   }
 }
