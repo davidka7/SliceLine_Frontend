@@ -29,7 +29,7 @@ export default class NewOrder extends Component {
 
   placeOrder = () => {
     
-    fetch('https://intense-chamber-39011.herokuapp.com/api/v1/orders', {
+    fetch(`https://intense-chamber-39011.herokuapp.com/api/v1/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
