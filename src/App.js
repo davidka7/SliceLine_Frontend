@@ -72,7 +72,8 @@ export default class App extends Component {
   }
 
   login = (user) => {
-    fetch(`http://localhost:3000/api/v1/users/${user}`)
+    // fetch(`http://localhost:3000/api/v1/users/${user}`)
+    fetch(`https://intense-chamber-39011.herokuapp.com/api/v1/users/${user}`)
       .then(resp => {
         return resp.json()
       })
