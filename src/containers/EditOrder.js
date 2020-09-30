@@ -44,7 +44,7 @@ export default class NewOrder extends Component {
       }
 
     updateOrder = () => {
-        fetch(`http://localhost:3000/api/v1/orders/${this.props.order.id}`, {
+        fetch(`https://intense-chamber-39011.herokuapp.com/api/v1/users/api/v1/orders/${this.props.order.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

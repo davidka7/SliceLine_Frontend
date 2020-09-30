@@ -2,7 +2,7 @@ import React from 'react'
 import Pizza from './Pizza'
 import '../index.css';
 const Order = (props) => {
-
+console.log(props)
   const pizzas = props.order.pizzas.map((pizza, index) => <Pizza pizza={pizza} key={index} />)
 
   const handleDeleteButton = () => {
